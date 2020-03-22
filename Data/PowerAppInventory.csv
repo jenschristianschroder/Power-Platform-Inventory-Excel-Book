@@ -1,0 +1,3 @@
+#TYPE System.Management.Automation.PSCustomObject
+"DisplayName","OwnerEmail","EnvironmentCreatedTime","Environment","OwnerUPN","Location","IsDefault","Owner","AppName"
+"Power App Name","maker@email.com","2020-01-01T00:00:00.0000000Z","Personal Productivity ()","maker@email.com","europe","True","Maker Name","59fa43fd-1707-4682-9412-72103da267a1"
