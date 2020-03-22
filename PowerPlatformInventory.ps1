@@ -9,10 +9,10 @@ $PowerAppsModuleVersion = Get-Module -Name Microsoft.PowerApps.PowerShell | sele
 Write-Host "Microsoft.PowerApps.PowerShell is version" $PowerAppsModuleVersion.Version  -ForegroundColor Green
 
 Add-PowerAppsAccount
-Write-Host "Connected to Power Platform as" $cred.UserName -ForegroundColor Green
+Write-Host "Connected to Power Platform" -ForegroundColor Green
 
 Connect-AzureAD
-Write-Host "Connected to Azure AD as" $cred.UserName -ForegroundColor Green
+Write-Host "Connected to Azure AD" -ForegroundColor Green
 
 #Get Environment Inventory
 Write-Host "`n"
