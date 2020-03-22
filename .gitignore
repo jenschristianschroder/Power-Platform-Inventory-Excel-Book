@@ -1,2 +1,5 @@
 # ignore all temporary files
 ~*
+
+# ignore power point
+*.pptx
