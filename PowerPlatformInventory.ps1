@@ -19,6 +19,7 @@ Write-Host "`n"
 Write-Host "Collecting Environment Inventory"
 $Array = @()
 ForEach($Environment in Get-PowerAppEnvironment) {
+    $UserObject = Get-AzureADUser -All $true | Where-Object {$_.objectId -eq $Environment.CreatedBy.Id } | Select-Object UserPrincipalName, DisplayName
     $EnvironmentObject = New-Object PSObject -Property @{
         Environment = $Environment.Displayname
         EnvironmentOwner = $Environment.CreatedBy
@@ -37,6 +38,7 @@ Write-Host "Collecting Power Apps Inventory"
 $Array = @()
 ForEach($Environment in Get-PowerAppEnvironment) {
     ForEach($PowerApp in Get-AdminPowerApp -EnvironmentName $Environment.EnvironmentName){
+        $UserObject = Get-AzureADUser -All $true | Where-Object {$_.objectId -eq $PowerApp.Owner.Id } | Select-Object UserPrincipalName, DisplayName
         $PowerAppObject = New-Object PSObject -Property @{
             AppName = $PowerApp.AppName
             DisplayName = $PowerApp.DisplayName
@@ -44,9 +46,9 @@ ForEach($Environment in Get-PowerAppEnvironment) {
             EnvironmentCreatedTime = $Environment.CreatedTime
             Location = $Environment.Location
             IsDefault = $Environment.IsDefault
-            Owner = $PowerApp.Owner.displayName
-            OwnerEmail = $PowerApp.Owner.email
-            OwnerUPN = $PowerApp.Owner.userPrincipalName
+            Owner = $UserObject.DisplayName
+            OwnerEmail = $UserObject.UserPrincipalName
+            OwnerUPN = $UserObject.UserPrincipalName
         }
         $Array += $PowerAppObject
     }
@@ -60,7 +62,8 @@ Write-Host "Collecting Power Automate Inventory"
 $Array = @()
 ForEach($Environment in Get-FlowEnvironment) {
     ForEach($Flow in Get-AdminFlow -EnvironmentName $Environment.EnvironmentName){
-        $UserObject = Get-AzureADUser -All $true|Where-Object {$_.objectId -eq $Flow.CreatedBy.objectId } | Select-Object UserPrincipalName, DisplayName
+        
+        $UserObject = Get-AzureADUser -All $true | Where-Object {$_.objectId -eq $Flow.CreatedBy.objectId } | Select-Object UserPrincipalName, DisplayName
         $FlowObject = New-Object PSObject -Property @{
             AppName = $Flow.FlowName
             DisplayName = $Flow.DisplayName
