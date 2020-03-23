@@ -60,7 +60,7 @@ Write-Host "Collecting Power Automate Inventory"
 $Array = @()
 ForEach($Environment in Get-FlowEnvironment) {
     ForEach($Flow in Get-AdminFlow -EnvironmentName $Environment.EnvironmentName){
-        $UserObject = Get-AzureADUser -ObjectId $Flow.CreatedBy.objectId 
+        $UserObject = Get-AzureADUser -All $true|Where-Object {$_.objectId -eq $Flow.CreatedBy.objectId } | Select-Object UserPrincipalName, DisplayName
         $FlowObject = New-Object PSObject -Property @{
             AppName = $Flow.FlowName
             DisplayName = $Flow.DisplayName
