@@ -1,11 +1,11 @@
 ﻿Write-Host "Updating required PowerShell modules"
 
 Install-Module -Name Microsoft.PowerApps.Administration.PowerShell -AllowClobber -Force -ErrorAction Stop
-$AdminModuleVersion = Get-Module -Name Microsoft.PowerApps.Administration.PowerShell | select Version
+$AdminModuleVersion = Get-Module -Name Microsoft.PowerApps.Administration.PowerShell | Select-Object Version
 Write-Host "Microsoft.PowerApps.Administration.PowerShell is version" $AdminModuleVersion.Version  -ForegroundColor Green
 
 Install-Module -Name Microsoft.PowerApps.PowerShell -AllowClobber -Force -ErrorAction Stop
-$PowerAppsModuleVersion = Get-Module -Name Microsoft.PowerApps.PowerShell | select Version
+$PowerAppsModuleVersion = Get-Module -Name Microsoft.PowerApps.PowerShell | Select-Object Version
 Write-Host "Microsoft.PowerApps.PowerShell is version" $PowerAppsModuleVersion.Version  -ForegroundColor Green
 
 Add-PowerAppsAccount
@@ -68,9 +68,9 @@ ForEach($Environment in Get-FlowEnvironment) {
             EnvironmentCreatedTime = $Environment.CreatedTime
             Location = $Environment.Location
             IsDefault = $Environment.IsDefault
-            Owner = $UserObject | select -ExpandProperty DisplayName
-            OwnerEmail = $UserObject | select -ExpandProperty UserPrincipalName 
-            OwnerUPN = $UserObject | select -ExpandProperty UserPrincipalName 
+            Owner = $UserObject | Select-Object -ExpandProperty DisplayName
+            OwnerEmail = $UserObject | Select-Object -ExpandProperty UserPrincipalName 
+            OwnerUPN = $UserObject | Select-Object -ExpandProperty UserPrincipalName 
         }
         $Array += $FlowObject
     }
