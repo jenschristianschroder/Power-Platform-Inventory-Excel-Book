@@ -1,12 +1,16 @@
-﻿Write-Host "Updating required PowerShell modules"
+﻿$installModules = $false
 
-Install-Module -Name Microsoft.PowerApps.Administration.PowerShell -AllowClobber -Force -ErrorAction Stop
-$AdminModuleVersion = Get-Module -Name Microsoft.PowerApps.Administration.PowerShell | Select-Object Version
-Write-Host "Microsoft.PowerApps.Administration.PowerShell is version" $AdminModuleVersion.Version  -ForegroundColor Green
+if($installModules -eq $true) {
+    Write-Host "Updating required PowerShell modules"
 
-Install-Module -Name Microsoft.PowerApps.PowerShell -AllowClobber -Force -ErrorAction Stop
-$PowerAppsModuleVersion = Get-Module -Name Microsoft.PowerApps.PowerShell | Select-Object Version
-Write-Host "Microsoft.PowerApps.PowerShell is version" $PowerAppsModuleVersion.Version  -ForegroundColor Green
+    Install-Module -Name Microsoft.PowerApps.Administration.PowerShell -AllowClobber -Force -ErrorAction Stop
+    $AdminModuleVersion = Get-Module -Name Microsoft.PowerApps.Administration.PowerShell | Select-Object Version
+    Write-Host "Microsoft.PowerApps.Administration.PowerShell is version" $AdminModuleVersion.Version  -ForegroundColor Green
+
+    Install-Module -Name Microsoft.PowerApps.PowerShell -AllowClobber -Force -ErrorAction Stop
+    $PowerAppsModuleVersion = Get-Module -Name Microsoft.PowerApps.PowerShell | Select-Object Version
+    Write-Host "Microsoft.PowerApps.PowerShell is version" $PowerAppsModuleVersion.Version  -ForegroundColor Green
+}
 
 Add-PowerAppsAccount
 Write-Host "Connected to Power Platform" -ForegroundColor Green
@@ -22,6 +26,7 @@ ForEach($Environment in Get-PowerAppEnvironment) {
     $UserObject = Get-AzureADUser -All $true | Where-Object {$_.objectId -eq $Environment.CreatedBy.Id } | Select-Object UserPrincipalName, DisplayName
     $EnvironmentObject = New-Object PSObject -Property @{
         Environment = $Environment.Displayname
+        EnvironmentId = $Environment | Select-Object -ExpandProperty Internal | Select-Object -ExpandProperty name
         EnvironmentOwner = $Environment.CreatedBy
         EnvironmentCreatedTime = $Environment.CreatedTime
         Location = $Environment.Location
