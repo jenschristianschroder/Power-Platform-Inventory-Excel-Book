@@ -1,3 +1,3 @@
 #TYPE System.Management.Automation.PSCustomObject
-"Environment","EnvironmentCreatedTime","IsDefault","Location","EnvironmentOwner"
-"Personal Productivity ()","2020-01-01T00:00:00.0000000Z","True","europe",
+"EnvironmentCreatedTime","Location","Environment","EnvironmentOwner","EnvironmentId","IsDefault"
+"2019-04-09T01:22:49.08701Z","europe","Personal Productivity",,"871c2ce3-d2bb-4bfd-92ef-854f523d0530","True"

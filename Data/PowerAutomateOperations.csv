@@ -1,0 +1,3 @@
+#TYPE System.Management.Automation.PSCustomObject
+"EnvironemtnName","Operation","AppName","UserId","CreationTime"
+"871c2ce3-d2bb-4bfd-92ef-854f523d0530","CreateFlow","227fef56-94f2-4d52-9a5c-aa6c14adfa69","test@email.com","2020-03-24T14:16:53"
